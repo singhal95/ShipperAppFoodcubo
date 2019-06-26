@@ -104,7 +104,7 @@ public class TrackingOrder extends FragmentActivity implements OnMapReadyCallbac
                 shippedOrder();
                 else{
                     finish();
-                    startActivity(new Intent(TrackingOrder.this,MainActivity.class));
+                    startActivity(new Intent(TrackingOrder.this,MainActivity.class));//why main activity(signin page).
                 }
             }
         });
@@ -114,7 +114,10 @@ public class TrackingOrder extends FragmentActivity implements OnMapReadyCallbac
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            return;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+
+            //return;//grant permission (me)
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
 
@@ -136,14 +139,14 @@ public class TrackingOrder extends FragmentActivity implements OnMapReadyCallbac
                         Map<String,Object>update_status=new HashMap<>();
                         update_status.put("status","03");
                         FirebaseDatabase.getInstance().getReference("Requests")
-                                .child(Common.currentKey)
+                                .child(Common.currentKey)//which key
                                 .updateChildren(update_status)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //delete from shipping order
                                         FirebaseDatabase.getInstance().getReference(Common.SHIPPER_INFO_TABLE)
-                                                .child(Common.currentKey)
+                                                .child(Common.currentKey)//parent node of key/
                                                 .removeValue()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
@@ -178,7 +181,7 @@ public class TrackingOrder extends FragmentActivity implements OnMapReadyCallbac
                 if(mCurrentMarker!=null){
                     mCurrentMarker.setPosition(new LatLng(mlastlocation.getLatitude(),mlastlocation.getLongitude()));//update location for marker
                     //update location for shipping
-                    Common.updateShippingInformation(Common.currentKey,mlastlocation);
+                    Common.updateShippingInformation(Common.currentKey,mlastlocation);//where is shipping info(me)
 //                    mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mlastlocation.getLatitude(),mlastlocation.getLongitude())));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mlastlocation.getLatitude(),mlastlocation.getLongitude()), 16));
                     drawRoute(new LatLng(mlastlocation.getLatitude(),mlastlocation.getLongitude()),Common.currentRequest);
@@ -250,7 +253,7 @@ public class TrackingOrder extends FragmentActivity implements OnMapReadyCallbac
                String[] latLng=request.getLatLng().split(",");
                LatLng orderLocation=new LatLng(Double.parseDouble(latLng[0]),Double.parseDouble(latLng[1]));
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.house);
-                bitmap=Common.scaleBitmap(bitmap,70,70);
+                bitmap=Common.scaleBitmap(bitmap,70,70);//bitmap_s
 
                 MarkerOptions marker = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                         .title("Order of " +Common.currentRequest.getPhone())

@@ -2,6 +2,7 @@ package com.example.abhatripathi.foodcuboshipperapp.Model;
 
 import java.util.List;
 
+
 public class Request {
     private String phone;
     private String name;

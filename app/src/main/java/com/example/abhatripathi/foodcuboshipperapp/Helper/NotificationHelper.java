@@ -31,11 +31,11 @@ public class NotificationHelper extends ContextWrapper {
     private void createChannel() {
         NotificationChannel channel= new NotificationChannel(FOOD_CHANNEL_ID,
                 FOOD_CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationManager.IMPORTANCE_DEFAULT);//Default notification importance: shows everywhere, makes noise, but does not visually intrude.
         channel.enableLights(false);
         channel.enableVibration(true);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);//Notification visibility: Show this notification on all lockscreens, but conceal sensitive or private information on secure lockscreens.
+//Notification visibility: Show this notification on all lockscreens, but conceal sensitive or private information on secure lockscreens.
         getManager().createNotificationChannel(channel);
 
 

@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class Common {
 
-    public static  Request currentRequest;
+    public static  Request currentRequest;//object of request
     public static  String currentKey;
     public static final String ORDER_NEED_SHIP_TABLE="OrdersNeedShip";
     public static final String SHIPPER_INFO_TABLE="ShippingOrders";
@@ -51,7 +51,8 @@ public class Common {
         Calendar calendar=  Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
         StringBuilder date=new StringBuilder(
-                android.text.format.DateFormat.format("dd-MM-yyyy HH:mm",calendar).toString()
+                android.text.format.DateFormat.format("dd-MM-yyyy HH:mm",calendar).toString()//android.text.format
+                //KJava This package contains alternative classes for some text formatting classe
         );
         return date.toString();
     }
@@ -64,7 +65,7 @@ public class Common {
         shippingInformation.setLng(mlastlocation.getLongitude());
 
         //create new item on shipper information table
-        FirebaseDatabase.getInstance().getReference(SHIPPER_INFO_TABLE)
+        FirebaseDatabase.getInstance().getReference(SHIPPER_INFO_TABLE)//where is table?me
                 .child(key)
                 .setValue(shippingInformation).addOnFailureListener(new OnFailureListener() {
             @Override

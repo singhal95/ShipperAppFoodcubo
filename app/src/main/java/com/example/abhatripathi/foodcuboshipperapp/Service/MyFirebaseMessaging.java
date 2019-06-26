@@ -37,7 +37,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
     private void sendNotificatonAPI26(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
         String title = data.get("title");
-        String message = data.get("message");
+        String message = data.get("msg");
 
         //here we will fix to click to notification -->go to order list
         PendingIntent pendingIntent;
@@ -45,7 +45,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         Notification.Builder builder;
 
         if (Common.currentShipper != null) {
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);//why home activity(me)????
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
